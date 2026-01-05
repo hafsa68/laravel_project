@@ -240,10 +240,15 @@
                                 <div class="dropdown-divider"></div>
 
                                 <!-- item-->
-                                <a href="pages-login.html" class="dropdown-item notify-item">
+
+                               <form action="{{ route('logout') }}" method="post">
+                                 @csrf
+                                 
+                                <button type="submit" class="dropdown-item notify-item">
                                     <i class="fe-log-out"></i>
                                     <span>Logout</span>
-                                </a>
+                                </button>
+                               </form>
 
                             </div>
                         </li>
