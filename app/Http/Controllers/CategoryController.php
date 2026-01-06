@@ -30,7 +30,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //return"kichu nai";
+        //dd($request);
+         //$request->cat;
+
+         $category = [
+            'name' => $request->cat
+         ];
+         Category::create($category);
+         //Category::insert($category);
+         return redirect('/dashboard');
     }
 
     /**

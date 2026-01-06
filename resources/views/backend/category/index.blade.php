@@ -42,7 +42,7 @@
                 <div class="py-3 py-lg-4">
                     <div class="row">
                         <div class="col-lg-6">
-                            <h4 class="page-title mb-0">Category List <span class="float-end"><button class="btn btn-primary">Add Category</button></span></h4>
+                            <h4 class="page-title mb-0">Category List <span class="float-end"><a href="{{url('category/create')}}" class="btn btn-primary">Add Category</a></span></h4>
                         </div>
                         <div class="col-lg-6">
                             <div class="d-none d-lg-block">
