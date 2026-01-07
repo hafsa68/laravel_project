@@ -33,13 +33,25 @@ class CategoryController extends Controller
         //return"kichu nai";
         //dd($request);
          //$request->cat;
+$request->validate([
+    'cat'=>'required|max:10|min:3|unique:categories,name'
+],[
+    'required'=>'Category name must be entered',
+    'min'=>'Minimum 3 character is required'
+    
+    //error msg show
+]
 
-         $category = [
+
+
+);
+
+         $data = [
             'name' => $request->cat
          ];
-         Category::create($category);
+         Category::create($data);
          //Category::insert($category);
-         return redirect('/dashboard');
+         return redirect()->route('category.index')->with('success','Category Added');
     }
 
     /**
@@ -55,7 +67,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('backend.category.edit');
+        return view('backend.category.edit',compact('category'));
     }
 
     /**
@@ -63,7 +75,29 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        
+$request->validate([
+    'cat'=>'required|max:10|min:3|unique:categories,name'
+],[
+    'required'=>'Category name must be entered',
+    'min'=>'Minimum 3 character is required'
+    
+    //error msg show
+]
+
+
+
+);
+
+
+
+
+       $data = [
+
+        'name'=> $request->cat
+       ];
+       $category->update($data);
+       return redirect()->route('category.index')->with('success','Successfully Update');
     }
 
     /**
@@ -71,6 +105,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        //dd($category);
+        //return $category->delete(); 
+        $category->delete(); 
+        return redirect()->route('category.index')->with('success','Successfully deleted');
+
     }
 }

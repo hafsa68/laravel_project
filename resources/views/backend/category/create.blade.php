@@ -57,12 +57,20 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <h4 class="header-title mb-3">Category Entry Form</h4>
+                                        @if($errors->any())
+<div class="alert alert-danger">
+@foreach($errors->all() as $error)
+<div class="alert alert-danger">{{$error}}</div>
+@endforeach
 
+</div>
+  @endif
+                                        
                                         <form role="form" method="post" action="{{route('category.store')}}">
                                             @csrf
                                             <div class="mb-2">
                                                 <label for="exampleInputEmail1" class="form-label">Category Name</label>
-                                                <input type="text" name="cat" class="form-control"  placeholder="Enter category name">
+                                                <input type="text" value="{{old('cat')}}" name="cat" class="form-control"  placeholder="Enter category name">
                                                
                                             </div>
                                             

@@ -42,6 +42,11 @@
                 <div class="py-3 py-lg-4">
                     <div class="row">
                         <div class="col-lg-6">
+                            @if(session('success'))
+                             
+                                    <div class="alert alert-success">{{session('success')}}</div>
+                            @endif
+                            
                             <h4 class="page-title mb-0">Category List <span class="float-end"><a href="{{url('category/create')}}" class="btn btn-primary">Add Category</a></span></h4>
                         </div>
                         <div class="col-lg-6">
@@ -81,15 +86,19 @@
 
                                             @foreach($cats as $cat)
                                             <tr>
+                                                <form action="{{route('category.destroy',$cat->id)}}" method="post">
+                                                    @csrf
+                                                    @method('delete')
                                                 <th scope="row">{{$cat->id}}</th>
                                                 <td>{{$cat->name}}</td>
                                                 <td>
 
-                                                    <a href="" class="btn btn-light">Edit</a>
-                                                    <a href="" class="btn btn-light">delete</a>
+                                                    <a href="{{route('category.edit',$cat->id)}}" class="btn btn-light">Edit</a>
+
+                                                    <button type="submit" href="" class="btn btn-light">delete</button>
 
                                                 </td>
-
+</form>
                                             </tr>
                                             @endforeach
                                         </tbody>
