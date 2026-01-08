@@ -42,13 +42,13 @@
                         </a>
                         <div class="collapse" id="menuComponentsui">
                             <ul class="sub-menu">
-                                <li class="menu-item">
-                                    <a href="ui-alerts.html" class="menu-link">
+                                <li class="menu-item.html">
+                                    <a href="/product" class="menu-link">
                                         <span class="menu-text">All Products</span>
                                     </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="ui-buttons.html" class="menu-link">
+                                    <a href="/product/create" class="menu-link">
                                         <span class="menu-text">Add Products</span>
                                     </a>
                                 </li>
