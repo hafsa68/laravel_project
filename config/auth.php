@@ -34,11 +34,19 @@ return [
     | Supported: "session"
     |
     */
-
+//1st step
     'guards' => [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+        ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins', //admins table 
+        ],
+        'manager' => [
+            'driver' => 'session',
+            'provider' => 'managers', //manager table 
         ],
     ],
 
@@ -58,11 +66,19 @@ return [
     | Supported: "database", "eloquent"
     |
     */
-
+//2nd step
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+        ],
+        'managers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Manager::class,
         ],
 
         // 'users' => [

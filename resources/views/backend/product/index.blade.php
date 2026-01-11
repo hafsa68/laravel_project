@@ -99,7 +99,7 @@
                                                 <td>{{$item->price}}</td>
                                                 <td>{{$item->stock}}</td>
                                                 <td>{{$item->sku}}</td>
-                                                <td>{{$item->category_id}}</td>
+                                                <td>{{$item->category->name}}</td>
                                                 <td>{{$item->image}}</td>
                                                 <td>
 

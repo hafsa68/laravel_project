@@ -9,8 +9,13 @@
     <div class="layout-wrapper">
 
         <!-- ========== Left Sidebar ========== -->
+         @if(Auth::guard('web')->check())
        @include("backend.layouts.leftbar")
-        
+        @elseif(Auth::guard('admin')->check())
+         @include("backend.layouts.adminLeftbar")
+        @elseif(Auth::guard('manager')->check())
+         @include("backend.layouts.managerLeftbar")
+        @endif
 
         <!-- ============================================================== -->
         <!-- Start Page Content here -->
@@ -19,7 +24,13 @@
         <div class="page-content">
 
             <!-- ========== Topbar Start ========== -->
-            @include("backend.layouts.header")
+             @if(Auth::guard('web')->check())
+               @include("backend.layouts.header")
+            @elseif (Auth::guard('admin')->check())
+               @include("backend.layouts.adminHeader")
+            @elseif (Auth::guard('manager')->check())
+               @include("backend.layouts.managerHeader")
+            @endif
             <!-- ========== Topbar End ========== -->
 
             <div class="px-3">
