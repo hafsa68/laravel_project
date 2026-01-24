@@ -54,43 +54,32 @@
                         </div>
                         @endif
 
-                        <form method="post" action="{{ route('bed.update', $bed->id) }}">
+                        <form method="post" action="{{ route('amenitie.update', $amenitie->id) }}">
                             @csrf
                             @method('PUT')
 
                             <div class="mb-3">
-                                <label for="title" class="form-label">Bed Type *</label>
+                                <label for="title" class="form-label">Title *</label>
                                 <input type="text" 
-                                       name="bed" 
+                                       name="title" 
                                        class="form-control" 
-                                       value="{{ old('bed', $bed->bed_type) }}"
+                                       value="{{ old('title', $amenitie->title) }}"
                                        required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="status" class="form-label">Status *</label>
                                 <select class="form-select" id="status" name="status" required>
-                                    <option value="Enabled" {{ $bed->status == 'Enabled' ? 'selected' : '' }}>Enabled</option>
-                                    <option value="Disabled" {{ $bed->status == 'Disabled' ? 'selected' : '' }}>Disabled</option>
+                                    <option value="Enabled" {{ $amenitie->status == 'Enabled' ? 'selected' : '' }}>Enabled</option>
+                                    <option value="Disabled" {{ $amenitie->status == 'Disabled' ? 'selected' : '' }}>Disabled</option>
                                 </select>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="icon" class="form-label">Icon Class (FontAwesome)</label>
-                                <input type="text" 
-                                       class="form-control" 
-                                       id="icon" 
-                                       name="icon" 
-                                       value="{{ old('icon', $bed->icon) }}"
-                                       placeholder="fa-wifi, fa-tv, etc.">
-                                <small class="text-muted">Example: fa-wifi, fa-tv, fa-snowflake</small>
                             </div>
 
                             <div class="mt-4">
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-save me-1"></i> Update Amenity
                                 </button>
-                                <a href="{{ route('bed.index') }}" class="btn btn-secondary">
+                                <a href="{{ route('amenitie.index') }}" class="btn btn-secondary">
                                     Cancel
                                 </a>
                             </div>

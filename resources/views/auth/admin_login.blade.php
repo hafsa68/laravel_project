@@ -34,7 +34,7 @@
                             </a>
                         </div>
 
-                        <form action="{{ route('managers.login') }}" method="post">
+                        <form action="{{ route('admin.login') }}" method="post">
                              @csrf
 
                             <div class="form-group mb-3">

@@ -29,14 +29,14 @@ class AmenitieController extends Controller
      */
     public function store(Request $request)
     {
-       $validated = $request->validate([
-            'title' => 'required|string|max:100',
+        $validated = $request->validate([
+            'title' => 'required|string|max:100|min:3',
             'status' => 'required|in:Enabled,Disabled',
             'icon' => 'nullable|string|max:100',
         ]);
 
         Amenitie::create($validated);
-        return redirect()->route('amenitie.index')->with('success','New Amenitie Added');
+        return redirect()->route('amenitie.index')->with('success', 'New Amenitie Added');
     }
 
     /**
@@ -44,32 +44,58 @@ class AmenitieController extends Controller
      */
     public function edit($id)
     {
-        $amenitie = Amenitie::findOrFail($id);
+
         return view('backend.amenitie.edit', compact('amenitie'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Amenitie $amenitie)
     {
-        $amenitie = Amenitie::findOrFail($id);
-        
-        $validated = $request->validate([
+
+
+        $request->validate([
             'title' => 'required|string|max:100',
             'status' => 'required|in:Enabled,Disabled',
             'icon' => 'nullable|string|max:100',
         ]);
 
-        $amenitie->update($validated);
-        return redirect()->route('amenitie.index')->with('success','Amenitie Updated');
+
+        $data = [
+            'title' => $request->title,
+            'status' => $request->status,
+            'icon' => $request->icon,
+
+        ];
+
+        $amenitie->update($data);
+        return redirect()->route('amenitie.index')->with('success', 'Amenitie Updated');
     }
 
-    public function destroy($id)
+    public function show(Amenitie $product)
     {
-        $amenitie = Amenitie::findOrFail($id);
+        //
+    }
+
+    public function destroy(Amenitie $amenitie)
+    {
+
         $amenitie->delete();
-        
+
         return redirect()->route('amenitie.index')->with('success', 'Amenitie deleted');
     }
+
+    public function statusToggle(Request $request)
+    {
+        $amenity = Amenitie::findOrFail($request->id);
+
+        $amenity->status = $amenity->status == 'Enabled' ? 'Disabled' : 'Enabled';
+        $amenity->save();
+
+        return response()->json([
+            'status' => $amenity->status
+        ]);
+    }
 }
+

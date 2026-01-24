@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Myra Studio" name="author" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{url('')}}/assets/images/favicon.ico">
@@ -86,8 +87,8 @@
                                                     <th width="50">SL</th>
                                                     <th>Icon</th>
                                                     <th>Title</th>
-                                                    <th class="text-center" width="120">Status</th>
-                                                    <th class="text-center" width="250">Action</th>
+                                                    <th class="text-center" width="90">Status</th>
+                                                    <th class="text-center" width="300">Action</th>
                                                 </tr>
                                             </thead>
 
@@ -95,7 +96,7 @@
 
                                                 @foreach($data as $item)
                                                 <tr>
-                                                    <td>{{$item->id  }}</td>
+                                                    <td>{{$item->id }}</td>
                                                     <td>
                                                         @if($item->icon)
                                                         <i class="fas {{ $item->icon }} fa-lg text-primary"></i>
@@ -116,27 +117,38 @@
                                                         @endif
                                                     </td>
                                                     <td class="text-center">
-                                                        
-                                                        <a href="{{ route('amenitie.edit', $item->id) }}" 
-                                                           class="btn btn-sm btn-outline-primary">
+
+                                                        <a href="{{ route('amenitie.edit', $item->id) }}"
+                                                            class="btn btn-sm btn-outline-primary">
                                                             <i class="fas fa-edit"></i> Edit
                                                         </a>
-                                                        
-                                                    
-                                                       
-                                                            
-                                                            <button type="submit" class="btn btn-sm 
+
+
+                                                        <button
+                                                            type="button"
+                                                            class="btn btn-sm toggle-status 
+                                                                {{ $item->status == 'Enabled' ? 'btn-outline-warning' : 'btn-outline-success' }}"
+                                                            data-id="{{ $item->id }}"
+                                                            data-status="{{ $item->status }}">
+                                                            @if($item->status == 'Enabled')
+                                                            <i class="fas fa-toggle-off me-1"></i> Disable
+                                                            @else
+                                                            <i class="fas fa-toggle-on me-1"></i> Enable
+                                                            @endif
+                                                        </button>
+
+                                                        <!-- <button type="submit" class="btn btn-sm 
                                                                 {{ $item->status == 'Enabled' ? 'btn-outline-warning' : 'btn-outline-success' }}">
-                                                                @if($item->status == 'Enabled')
-                                                                <i class="fas fa-toggle-off me-1"></i> Disable
-                                                                @else
-                                                                <i class="fas fa-toggle-on me-1"></i> Enable
-                                                                @endif
-                                                            </button>
-                                                    
-                                                        
-                                                    
-                                                        
+                                                            @if($item->status == 'Enabled')
+                                                            <i class="fas fa-toggle-off me-1"></i> Disable
+                                                            @else
+                                                            <i class="fas fa-toggle-on me-1"></i> Enable
+                                                            @endif
+                                                        </button> -->
+
+
+
+
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -167,6 +179,48 @@
 @section("scripts")
 <script src="{{url('')}}/assets/js/vendor.min.js"></script>
 <script src="{{url('')}}/assets/js/app.js"></script>
+<script>
+    $(document).on('click', '.toggle-status', function() {
+
+        let button = $(this);
+        let id = button.data('id');
+
+        $.ajax({
+            url: "{{ route('amenitie.status.toggle') }}",
+            type: "POST",
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                id: id
+            },
+            success: function(response) {
+
+                if (response.status === 'Enabled') {
+                    button
+                        .removeClass('btn-outline-success')
+                        .addClass('btn-outline-warning')
+                        .html('<i class="fas fa-toggle-off me-1"></i> Disable');
+
+                    button.closest('tr').find('.badge')
+                        .removeClass('bg-danger')
+                        .addClass('bg-success')
+                        .html('<i class="fas fa-check-circle me-1"></i> Enabled');
+
+                } else {
+                    button
+                        .removeClass('btn-outline-warning')
+                        .addClass('btn-outline-success')
+                        .html('<i class="fas fa-toggle-on me-1"></i> Enable');
+
+                    button.closest('tr').find('.badge')
+                        .removeClass('bg-success')
+                        .addClass('bg-danger')
+                        .html('<i class="fas fa-times-circle me-1"></i> Disabled');
+                }
+            }
+        });
+    });
+</script>
+
 
 
 @endsection

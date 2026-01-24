@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FacilitieController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('facilitie',FacilitieController::class);
     Route::resource('bed',BedController::class);
     Route::resource('amenitie',AmenitieController::class);
+    Route::resource('room',RoomController::class);
     
   
 });
@@ -85,5 +87,12 @@ Route::middleware('auth:manager')->prefix('manager')->group( function () {
     Route::view('/dashboard','backend.manager_dashboard');
 
 });
+
+Route::post('/amenitie/status-toggle', [AmenitieController::class, 'statusToggle'])
+    ->name('amenitie.status.toggle');
+    Route::post('/bed/status-toggle', [BedController::class, 'statusToggle'])
+    ->name('bed.status.toggle');
+    Route::post('/room/status-toggle', [RoomController::class, 'statusToggle'])
+    ->name('room.status.toggle');
 
 require __DIR__.'/auth.php';

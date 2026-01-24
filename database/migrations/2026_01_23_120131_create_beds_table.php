@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('bed_type', 100)->unique();
             
             $table->string('icon', 100)->default('fa-bed');
-            $table->boolean('is_active')->default(true);
+             $table->enum('status', ['Enabled', 'Disabled'])->default('Enabled');
             $table->timestamps();
         });
     }

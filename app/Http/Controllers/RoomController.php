@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
+use App\Models\Room;
 use Illuminate\Http\Request;
 
-class AdminController extends Controller
+class RoomController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-      
+        $data=Room::get();
+        return view('backend.room.index',compact('data'));
     }
 
     /**
@@ -20,7 +21,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+         return view('backend.room.create');
     }
 
     /**
@@ -34,7 +35,7 @@ class AdminController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Admin $admin)
+    public function show(Room $room)
     {
         //
     }
@@ -42,7 +43,7 @@ class AdminController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Admin $admin)
+    public function edit(Room $room)
     {
         //
     }
@@ -50,7 +51,7 @@ class AdminController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Admin $admin)
+    public function update(Request $request, Room $room)
     {
         //
     }
@@ -58,7 +59,7 @@ class AdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Admin $admin)
+    public function destroy(Room $room)
     {
         //
     }

@@ -21,7 +21,7 @@ class BedController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.bed.create');
     }
 
     /**
@@ -29,7 +29,14 @@ class BedController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $validated = $request->validate([
+            'bed_type' => 'required|string|max:100|min:3',
+            'status' => 'required|in:Enabled,Disabled',
+            'icon' => 'nullable|string|max:100',
+        ]);
+
+          Bed::create($validated);
+        return redirect()->route('bed.index')->with('success', 'New Bed Type Added');
     }
 
     /**
@@ -45,7 +52,7 @@ class BedController extends Controller
      */
     public function edit(Bed $bed)
     {
-        //
+         return view('backend.bed.edit', compact('bed'));
     }
 
     /**
@@ -53,7 +60,22 @@ class BedController extends Controller
      */
     public function update(Request $request, Bed $bed)
     {
-        //
+        
+        $request->validate([
+            'bed_type' => 'required|string|max:100',
+            'status' => 'required|in:Enabled,Disabled',
+            'icon' => 'nullable|string|max:100',
+        ]);
+
+         $data = [
+            'bed' => $request->bed,
+            'status' => $request->status,
+            'icon' => $request->icon,
+
+        ];
+
+        $bed->update($data);
+        return redirect()->route('bed.index')->with('success', 'Bed Updated');
     }
 
     /**
@@ -61,6 +83,22 @@ class BedController extends Controller
      */
     public function destroy(Bed $bed)
     {
-        //
+        
+
+        $bed->delete();
+
+        return redirect()->route('bed.index')->with('success', 'Bed Type deleted');
+    }
+
+     public function statusToggle(Request $request)
+    {
+        $bed = Bed::findOrFail($request->id);
+
+        $bed->status = $bed->status == 'Enabled' ? 'Disabled' : 'Enabled';
+        $bed->save();
+
+        return response()->json([
+            'status' => $bed->status
+        ]);
     }
 }

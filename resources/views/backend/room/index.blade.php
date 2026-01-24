@@ -7,8 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Myra Studio" name="author" />
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{url('')}}/assets/images/favicon.ico">
@@ -64,9 +63,9 @@
                             <div class="card shadow-sm">
                                 <div class="card-header d-flex justify-content-between align-items-center">
                                     <h5 class="mb-0">
-                                        <i class="fas fa-list me-2"></i> Bed List
+                                        <i class="fas fa-list me-2"></i> All Amenities
                                     </h5>
-                                    <a href="{{ route('bed.create') }}" class="btn btn-primary btn-sm">
+                                    <a href="{{ route('room.create') }}" class="btn btn-primary btn-sm">
                                         <i class="fas fa-plus me-1"></i> Add New
                                     </a>
                                 </div>
@@ -75,9 +74,9 @@
                                     @if($data->isEmpty())
                                     <div class="text-center py-5">
                                         <i class="fas fa-info-circle fa-2x text-muted mb-3"></i>
-                                        <p class="text-muted">No bed type found.</p>
-                                        <a href="{{ route('bed.create') }}" class="btn btn-primary">
-                                            <i class="fas fa-plus me-1"></i> Add First Bed
+                                        <p class="text-muted">No amenities found.</p>
+                                        <a href="{{ route('room.create') }}" class="btn btn-primary">
+                                            <i class="fas fa-plus me-1"></i> Add First Amenity
                                         </a>
                                     </div>
                                     @else
@@ -86,8 +85,12 @@
                                             <thead class="table-primary">
                                                 <tr>
                                                     <th width="50">SL</th>
-                                                    <th>Icon</th>
-                                                    <th>Bed Type</th>
+                                                    <th>Name</th>
+                                                    <th>Fare</th>
+                                                    <th>Adult</th>
+                                                    <th>child</th>
+                                                    <th>Feature Status</th>
+                                                    <th>Room/Suite</th>
                                                     <th class="text-center" width="90">Status</th>
                                                     <th class="text-center" width="300">Action</th>
                                                 </tr>
@@ -97,15 +100,15 @@
 
                                                 @foreach($data as $item)
                                                 <tr>
-                                                    <td>{{ $item->id }}</td>
-                                                    <td>
-                                                        @if($item->icon)
-                                                        <i class="fas {{ $item->icon }} fa-lg text-primary"></i>
-                                                        @else
-                                                        <i class="fas fa-question-circle fa-lg text-secondary"></i>
-                                                        @endif
-                                                    </td>
-                                                    <td>{{ $item->bed_type }}</td>
+                                                    <td>{{$item->id }}</td>
+                                                    
+                                                    <td>{{ $item->name }}</td>
+                                                    <td>{{ $item->fare }}</td>
+                                                    <td>{{ $item->adults }}</td>
+                                                    <td>{{ $item->children }}</td>
+                                                    <td>{{ $item->is_featured }}</td>
+                                                    <td>{{ $item->room_type }}</td>
+
                                                     <td class="text-center">
                                                         @if($item->status == 'Enabled')
                                                         <span class="badge bg-success">
@@ -118,13 +121,13 @@
                                                         @endif
                                                     </td>
                                                     <td class="text-center">
-                                                        <!-- Edit Button -->
-                                                        <a href="{{ route('bed.edit', $item->id) }}" 
-                                                           class="btn btn-sm btn-outline-primary">
+
+                                                        <a href="{{ route('amenitie.edit', $item->id) }}"
+                                                            class="btn btn-sm btn-outline-primary">
                                                             <i class="fas fa-edit"></i> Edit
                                                         </a>
-                                                        
-                                                        <!-- Status Toggle Button -->
+
+
                                                         <button
                                                             type="button"
                                                             class="btn btn-sm toggle-status 
@@ -137,18 +140,19 @@
                                                             <i class="fas fa-toggle-on me-1"></i> Enable
                                                             @endif
                                                         </button>
-                                                        
-                                                        <!-- Delete Button -->
-                                                        <form action="{{ route('bed.destroy', $item->id) }}" 
-                                                              method="POST" 
-                                                              class="d-inline"
-                                                              onsubmit="return confirm('Are you sure to delete?')">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-sm btn-outline-danger">
-                                                                <i class="fas fa-trash"></i> Delete
-                                                            </button>
-                                                        </form>
+
+                                                        <!-- <button type="submit" class="btn btn-sm 
+                                                                {{ $item->status == 'Enabled' ? 'btn-outline-warning' : 'btn-outline-success' }}">
+                                                            @if($item->status == 'Enabled')
+                                                            <i class="fas fa-toggle-off me-1"></i> Disable
+                                                            @else
+                                                            <i class="fas fa-toggle-on me-1"></i> Enable
+                                                            @endif
+                                                        </button> -->
+
+
+
+
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -179,7 +183,6 @@
 @section("scripts")
 <script src="{{url('')}}/assets/js/vendor.min.js"></script>
 <script src="{{url('')}}/assets/js/app.js"></script>
-
 <script>
     $(document).on('click', '.toggle-status', function() {
 
@@ -187,7 +190,7 @@
         let id = button.data('id');
 
         $.ajax({
-            url: "{{ route('bed.status.toggle') }}",
+            url: "{{ route('amenitie.status.toggle') }}",
             type: "POST",
             data: {
                 _token: $('meta[name="csrf-token"]').attr('content'),
@@ -221,5 +224,7 @@
         });
     });
 </script>
+
+
 
 @endsection

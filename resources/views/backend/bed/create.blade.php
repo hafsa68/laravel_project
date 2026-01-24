@@ -55,17 +55,17 @@
                         </div>
                         @endif
 
-                        <form method="post" action="{{route('amenitie.store')}}">
-                            @method('PUT')
+                        <form method="post" action="{{route('bed.store')}}">
+                          
                             @csrf
 
                             <div class="mb-3">
-                                <label for="title" class="form-label">Title *</label>
+                                <label for="title" class="form-label">Bed Type *</label>
                                 <input type="text" 
-                                       name="title" 
+                                       name="bed_type" 
                                        id="title"
-                                       class="form-control @error('title') is-invalid @enderror"
-                                       value="{{ old('title') }}"
+                                       class="form-control @error('bed_type') is-invalid @enderror"
+                                       value="{{ old('bed_type') }}"
                                        placeholder="Enter amenity title"
                                        required>
                                 @error('title')
@@ -110,34 +110,12 @@
                                 </small>
                             </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Quick Icons:</label>
-                                <div class="d-flex flex-wrap gap-2 mb-3">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary icon-btn" data-icon="fa-wifi">
-                                        <i class="fas fa-wifi"></i> WiFi
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary icon-btn" data-icon="fa-tv">
-                                        <i class="fas fa-tv"></i> TV
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary icon-btn" data-icon="fa-snowflake">
-                                        <i class="fas fa-snowflake"></i> AC
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary icon-btn" data-icon="fa-swimming-pool">
-                                        <i class="fas fa-swimming-pool"></i> Pool
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary icon-btn" data-icon="fa-car">
-                                        <i class="fas fa-car"></i> Parking
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary icon-btn" data-icon="fa-soap">
-                                        <i class="fas fa-soap"></i> Washing
-                                    </button>
-                                </div>
-                            </div>
+                            
 
                             <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save me-1"></i> Add Amenitie
+                                <i class="fas fa-save me-1"></i> Add Bed Type
                             </button>
-                            <a href="{{ route('amenitie.index') }}" class="btn btn-secondary">
+                            <a href="{{ route('bed.index') }}" class="btn btn-secondary">
                                 <i class="fas fa-list me-1"></i> Back to List
                             </a>
                         </form>
