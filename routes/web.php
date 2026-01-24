@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\AmenitieController;
+use App\Http\Controllers\BedController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FacilitieController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -33,8 +36,11 @@ Route::middleware('auth')->group(function () {
     // Route::get('/category/edit/{id}',[CategoryController::class, 'edit'])->name('category.edit');
     // Route::post('/category/delete{id}',[CategoryController::class, 'destroy'])->name('category.delete');
 
-    Route::resource('category',CategoryController::class);
-    Route::resource('product',ProductController::class);
+    Route::resource('facilitie',FacilitieController::class);
+    Route::resource('bed',BedController::class);
+    Route::resource('amenitie',AmenitieController::class);
+    
+  
 });
 
 
