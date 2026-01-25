@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('adults');
             $table->integer('children');
              $table->enum('is_featured', ['Featured', 'Unfeatured'])->default('Unfeatured');
-            $table->enum('room_type', ['Room', 'Suite']);
+            $table->enum('room_type', ['Room', 'Suite'])->default('Room');
             $table->enum('status', ['Enabled', 'Disabled'])->default('Enabled');
             $table->timestamps();
         });

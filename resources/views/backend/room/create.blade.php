@@ -1,4 +1,7 @@
-@extends("backend.layouts.app")
+ 
+ 
+ 
+ @extends("backend.layouts.app")
 @section("head")
 
 <head>
@@ -26,15 +29,7 @@
         <!-- start page title -->
         <div class="py-3 py-lg-4">
             <div class="row">
-                <div class="col-lg-8">
-                    <h4 class="page-title mb-0">Amenitie Entry Form</h4>
-                </div>
-            </div>
-        </div>
-        <!-- end page title -->
-
-        <div class="row">
-            <div class="col-lg-8">
+                 <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
                         @if(session('success'))
@@ -73,7 +68,7 @@
                             <div class="mb-3">
                                 <label for="title" class="form-label">Fare</label>
                                 <input type="text"
-                                    name="name"
+                                    name="fare"
                                     id="name"
                                     class="form-control "
                                     value="{{ old('name') }}"
@@ -84,7 +79,7 @@
                             <div class="mb-3">
                                 <label for="title" class="form-label">Adult</label>
                                 <input type="text"
-                                    name="name"
+                                    name="adults"
                                     id="name"
                                     class="form-control "
                                     value="{{ old('name') }}"
@@ -95,7 +90,7 @@
                             <div class="mb-3">
                                 <label for="title" class="form-label">Child</label>
                                 <input type="text"
-                                    name="name"
+                                    name="children"
                                     id="name"
                                     class="form-control "
                                     value="{{ old('name') }}"
@@ -127,7 +122,7 @@
                                 <label for="status" class="form-label">Feature Status *</label>
                                 <select class="form-select"
                                     id="status"
-                                    name="feature_status"
+                                    name="is_featured"
                                     required>
                                     <option value="">Select Feature</option>
                                     <option value="Featured"
@@ -145,8 +140,8 @@
                              <div class="mb-3">
                                 <label for="status" class="form-label">Room / Suite *</label>
                                 <select class="form-select"
-                                    id="room_suite"
-                                    name="room_suite"
+                                    id="room_type"
+                                    name="room_type"
                                     required>
                                     <option value="">Select Room / Suite</option>
                                     <option value="Room"
@@ -177,70 +172,72 @@
                     </form>
                 </div>
             </div>
+            </div>
         </div>
+        <!-- end page title -->
+
+       
     </div>
-</div>
 </div>
 
 <!-- JavaScript -->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Quick icon selection
-        document.querySelectorAll('.icon-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const icon = this.getAttribute('data-icon');
-                document.getElementById('icon').value = icon;
-
-                // Highlight selected button
-                document.querySelectorAll('.icon-btn').forEach(b => {
-                    b.classList.remove('btn-primary');
-                    b.classList.add('btn-outline-secondary');
-                });
-                this.classList.remove('btn-outline-secondary');
-                this.classList.add('btn-primary');
+document.addEventListener('DOMContentLoaded', function() {
+    // Quick icon selection
+    document.querySelectorAll('.icon-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const icon = this.getAttribute('data-icon');
+            document.getElementById('icon').value = icon;
+            
+            // Highlight selected button
+            document.querySelectorAll('.icon-btn').forEach(b => {
+                b.classList.remove('btn-primary');
+                b.classList.add('btn-outline-secondary');
             });
+            this.classList.remove('btn-outline-secondary');
+            this.classList.add('btn-primary');
         });
-
-        // Form validation
-        const form = document.querySelector('form');
-        form.addEventListener('submit', function(e) {
-            const title = document.getElementById('title').value.trim();
-            const status = document.getElementById('status').value;
-
-            if (!title) {
-                e.preventDefault();
-                alert('Please enter a title');
-                document.getElementById('title').focus();
-                return false;
-            }
-
-            if (!status) {
-                e.preventDefault();
-                alert('Please select a status');
-                document.getElementById('status').focus();
-                return false;
-            }
-        });
-
-        // Auto-select Enabled by default
-        const statusSelect = document.getElementById('status');
-        if (!statusSelect.value) {
-            statusSelect.value = 'Enabled';
+    });
+    
+    // Form validation
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(e) {
+        const title = document.getElementById('title').value.trim();
+        const status = document.getElementById('status').value;
+        
+        if (!title) {
+            e.preventDefault();
+            alert('Please enter a title');
+            document.getElementById('title').focus();
+            return false;
+        }
+        
+        if (!status) {
+            e.preventDefault();
+            alert('Please select a status');
+            document.getElementById('status').focus();
+            return false;
         }
     });
+    
+    // Auto-select Enabled by default
+    const statusSelect = document.getElementById('status');
+    if (!statusSelect.value) {
+        statusSelect.value = 'Enabled';
+    }
+});
 </script>
 
 <style>
-    .icon-btn:hover {
-        transform: translateY(-2px);
-        transition: all 0.2s;
-    }
-
-    .btn-outline-secondary.btn-primary {
-        background-color: #0d6efd;
-        border-color: #0d6efd;
-        color: white;
-    }
+.icon-btn:hover {
+    transform: translateY(-2px);
+    transition: all 0.2s;
+}
+.btn-outline-secondary.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    color: white;
+}
 </style>
 
 @endsection
@@ -249,3 +246,5 @@
 <script src="{{url('')}}/assets/js/vendor.min.js"></script>
 <script src="{{url('')}}/assets/js/app.js"></script>
 @endsection
+ 
+ 
