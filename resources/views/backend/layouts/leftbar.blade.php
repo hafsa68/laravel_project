@@ -65,8 +65,8 @@
              <li class="menu-title">Booking</li>
 
              <li class="menu-item">
-                 <a href="/room" class="menu-link waves-effect waves-light">
-                     <span class="menu-icon"><i class="bx bx-cookie"></i></span>
+                 <a href="/booking" class="menu-link waves-effect waves-light">
+                     <span class="menu-icon"><i class="fa-solid fa-receipt"></i></span>
 
                      <span class="menu-text">Booking Request</span>
                  </a>

@@ -63,7 +63,7 @@
                             <div class="card shadow-sm">
                                 <div class="card-header d-flex justify-content-between align-items-center">
                                     <h5 class="mb-0">
-                                        <i class="fas fa-list me-2"></i> All Amenities
+                                        <i class="fas fa-list me-2"></i> All Room
                                     </h5>
                                     <a href="{{ route('room.create') }}" class="btn btn-primary btn-sm">
                                         <i class="fas fa-plus me-1"></i> Add New
@@ -74,7 +74,7 @@
                                     @if($data->isEmpty())
                                     <div class="text-center py-5">
                                         <i class="fas fa-info-circle fa-2x text-muted mb-3"></i>
-                                        <p class="text-muted">No amenities found.</p>
+                                        <p class="text-muted">No room type found.</p>
                                         <a href="{{ route('room.create') }}" class="btn btn-primary">
                                             <i class="fas fa-plus me-1"></i> Add First Amenity
                                         </a>
@@ -122,7 +122,7 @@
                                                     </td>
                                                     <td class="text-center">
 
-                                                        <a href="{{ route('amenitie.edit', $item->id) }}"
+                                                        <a href="{{ route('room.edit', $item->id) }}"
                                                             class="btn btn-sm btn-outline-primary">
                                                             <i class="fas fa-edit"></i> Edit
                                                         </a>
@@ -190,7 +190,7 @@
         let id = button.data('id');
 
         $.ajax({
-            url: "{{ route('amenitie.status.toggle') }}",
+            url: "{{ route('room.status.toggle') }}",
             type: "POST",
             data: {
                 _token: $('meta[name="csrf-token"]').attr('content'),

@@ -89,4 +89,16 @@ class RoomController extends Controller
          $room->delete();
         return redirect()->route('room.index')->with('success', 'Room Deleted Successfully');
     }
+
+     public function statusToggle(Request $request)
+    {
+        $amenity = Room::findOrFail($request->id);
+
+        $amenity->status = $amenity->status == 'Enabled' ? 'Disabled' : 'Enabled';
+        $amenity->save();
+
+        return response()->json([
+            'status' => $amenity->status
+        ]);
+    }
 }

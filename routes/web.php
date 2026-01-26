@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\AmenitieController;
 use App\Http\Controllers\BedController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FacilitieController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RequestController;
 use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('frontend.pages.home');
 });
 
 Route::get('/dashboard', function () {
@@ -41,6 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('bed',BedController::class);
     Route::resource('amenitie',AmenitieController::class);
     Route::resource('room',RoomController::class);
+    Route::resource('request',BookingController::class);
     
   
 });
