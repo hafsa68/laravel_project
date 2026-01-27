@@ -59,8 +59,28 @@
                                                 </ul>
                                             </li>
                                             <li><a href="{{url('')}}/assets/frontend/contact.html">Contact</a></li>                                               
-                                        </ul>
-                                    </nav>
+<li class="nav-item">
+    <a href="{{ route('login') }}" class="glass-btn">
+        Login
+    </a>
+</li>
+
+<style>
+    .glass-btn {
+        
+        color: white !important;
+        padding: 6px 20px;
+        border-radius: 2px;
+        text-decoration: none;
+        backdrop-filter: blur(5px);
+        transition: 0.4s;
+    }
+
+    .glass-btn:hover {
+        background: white;
+        color: #000 !important;
+    }
+</style>                               </nav>
                                 </div>
                             </div>   
                              <div class="col-xl-2 col-lg-2 d-none d-lg-block">

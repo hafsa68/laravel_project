@@ -8,15 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Room extends Model
 {
     use HasFactory;
-        protected $fillable = [
-        'name',
-        'fare',
-        'adults',
-        'children',
-        
-        'is_featured',
-        'room_type',
-        'status',
-    ]; 
+       protected $fillable = [
+        'name', 'slug', 'room_type', 'fare', 'offer_fare', 
+        'cancellation_fee', 'total_adult', 'total_child', 
+        'size', 'amenities', 'facilities', 'keywords', 
+        'description', 'cancellation_policy', 'main_image', 
+        'gallery_images', 'is_featured', 'status'
+    ];
+
+    
+    protected $casts = [
+        'gallery_images' => 'array',
+    ];
         
 }

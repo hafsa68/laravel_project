@@ -10,9 +10,9 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function AdminDashboard()
     {
-      
+        return view('backend.admin_dashboard');
     }
 
     /**

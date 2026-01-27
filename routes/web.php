@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AmenitieController;
 use App\Http\Controllers\BedController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FacilitieController;
+use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RequestController;
@@ -98,4 +100,13 @@ Route::post('/amenitie/status-toggle', [AmenitieController::class, 'statusToggle
     Route::post('/room/status-toggle', [RoomController::class, 'statusToggle'])
     ->name('room.status.toggle');
 
+
+
+
+
+
+
+
+     Route::get('/admin/dashboard', [AdminController::class, 'Admindashboard'])->name('admin.dashboard');
+     Route::get('/manager/dashboard', [ManagerController::class, 'ManagerDashboard'])->name('manager.dashboard');
 require __DIR__.'/auth.php';

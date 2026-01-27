@@ -4,101 +4,129 @@ namespace App\Http\Controllers;
 
 use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str; 
+use Illuminate\Support\Facades\File;
 
 class RoomController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $data=Room::get();
-        return view('backend.room.index',compact('data'));
+        $data = Room::latest()->get();
+        return view('backend.room.index', compact('data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-         return view('backend.room.create');
+        return view('backend.room.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-         $validated = $request->validate([
-            'name' => 'required|string|max:100|min:3',
-        'fare' => 'required|numeric|min:0', 
-        'adults' => 'required|integer|min:1|max:10', 
-        'children' => 'required|integer|min:0|max:10', 
-        'is_featured' => 'required|in:Featured,Unfeatured',
-        'room_type' => 'required|in:Room,Suite',
-        'status' => 'required|in:Enabled,Disabled',
-            
+        // ১. ডাটা ভ্যালিডেশন
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'room_type' => 'required',
+            'fare' => 'required|numeric',
+            'adults' => 'required|integer',
+            'children' => 'required|integer',
+            'main_image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        Room::create($validated);
-        return redirect()->route('room.index')->with('success','New Room Added');
+        $data = $request->all();
+
+        // ২. স্লাগ জেনারেশন
+        $data['slug'] = $request->slug ? Str::slug($request->slug) : Str::slug($request->name);
+
+        // ৩. কলাম ম্যাপিং (আপনার ডাটাবেস কলামের নামের সাথে মিল করা)
+        $data['total_adult'] = $request->adults;
+        $data['total_child'] = $request->children;
+
+        // ৪. মেইন ইমেজ আপলোড
+        if ($request->hasFile('main_image')) {
+            $path = public_path('uploads/rooms');
+            if (!File::isDirectory($path)) {
+                File::makeDirectory($path, 0777, true, true);
+            }
+
+            $imageName = time() . '.' . $request->main_image->extension();
+            $request->main_image->move($path, $imageName);
+            $data['main_image'] = 'uploads/rooms/' . $imageName;
+        }
+
+        // ৫. গ্যালারি ইমেজ আপলোড
+        if ($request->hasFile('gallery')) {
+            $galleryPath = public_path('uploads/rooms/gallery');
+            if (!File::isDirectory($galleryPath)) {
+                File::makeDirectory($galleryPath, 0777, true, true);
+            }
+
+            $galleryPaths = [];
+            foreach ($request->file('gallery') as $file) {
+                $name = uniqid() . '.' . $file->extension();
+                $file->move($galleryPath, $name);
+                $galleryPaths[] = 'uploads/rooms/gallery/' . $name;
+            }
+            $data['gallery_images'] = json_encode($galleryPaths);
+        }
+
+        // ৬. ডাটাবেসে সেভ
+        Room::create($data);
+
+        return redirect()->route('room.index')->with('success', 'Room added successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Room $room)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Room $room)
     {
-        return view('backend.room.edit',compact('room'));
+        return view('backend.room.edit', compact('room'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Room $room)
     {
-         $validated = $request->validate([
-            'name' => 'required|string|max:100|min:3',
-            'fare' => 'required|numeric|min:0',
-            'adults' => 'required|integer|min:1|max:10',
-            'children' => 'required|integer|min:0|max:10',
-            'is_featured' => 'required|in:Featured,Unfeatured',
-            'room_type' => 'required|in:Room,Suite',
-            'status' => 'required|in:Enabled,Disabled',
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'fare' => 'required|numeric',
+            'adults' => 'required|integer',
+            'children' => 'required|integer',
+            'room_type' => 'required',
+            'status' => 'required',
         ]);
 
-        $room->update($validated);
+        $data = $request->all();
+        $data['slug'] = $request->slug ? Str::slug($request->slug) : Str::slug($request->name);
+        
+        // আপডেট এর সময়ও ম্যাপিং জরুরি
+        $data['total_adult'] = $request->adults;
+        $data['total_child'] = $request->children;
+
+        if ($request->hasFile('main_image')) {
+            if ($room->main_image && file_exists(public_path($room->main_image))) {
+                unlink(public_path($room->main_image));
+            }
+            $imageName = time() . '.' . $request->main_image->extension();
+            $request->main_image->move(public_path('uploads/rooms'), $imageName);
+            $data['main_image'] = 'uploads/rooms/' . $imageName;
+        }
+
+        $room->update($data);
         return redirect()->route('room.index')->with('success', 'Room Updated Successfully');
     }
-    
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Room $room)
     {
-        
-         $room->delete();
+        if ($room->main_image && file_exists(public_path($room->main_image))) {
+            unlink(public_path($room->main_image));
+        }
+
+        $room->delete();
         return redirect()->route('room.index')->with('success', 'Room Deleted Successfully');
     }
 
-     public function statusToggle(Request $request)
+    public function statusToggle(Request $request)
     {
-        $amenity = Room::findOrFail($request->id);
+        $room = Room::findOrFail($request->id);
+        $room->status = $room->status == 'Enabled' ? 'Disabled' : 'Enabled';
+        $room->save();
 
-        $amenity->status = $amenity->status == 'Enabled' ? 'Disabled' : 'Enabled';
-        $amenity->save();
-
-        return response()->json([
-            'status' => $amenity->status
-        ]);
+        return response()->json(['status' => $room->status]);
     }
 }

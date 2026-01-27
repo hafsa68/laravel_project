@@ -14,12 +14,32 @@ return new class extends Migration
         Schema::create('rooms', function (Blueprint $table) {
            $table->id();
             $table->string('name');
+            $table->string('slug')->unique();
+            $table->string('room_type'); // Room or Suite
+            
+            // Pricing
             $table->decimal('fare', 10, 2);
-            $table->integer('adults');
-            $table->integer('children');
-             $table->enum('is_featured', ['Featured', 'Unfeatured'])->default('Unfeatured');
-            $table->enum('room_type', ['Room', 'Suite'])->default('Room');
+            $table->decimal('offer_fare', 10, 2)->nullable();
+            $table->decimal('cancellation_fee', 10, 2)->default(0);
+            
+            // Capacity & Size
+            $table->integer('total_adult');
+            $table->integer('total_child');
+            $table->string('size'); // e.g., 500 sqft
+            
+            // Details
+            $table->text('amenities')->nullable(); // JSON or Comma separated
+            $table->text('facilities')->nullable();
+            $table->text('keywords')->nullable();
+            $table->longText('description')->nullable();
+            $table->longText('cancellation_policy')->nullable();
+            
+            // Images & Status
+            $table->string('main_image')->nullable();
+            $table->text('gallery_images')->nullable(); // Multiple images path
+            $table->boolean('is_featured')->default(0);
             $table->enum('status', ['Enabled', 'Disabled'])->default('Enabled');
+            
             $table->timestamps();
         });
     }

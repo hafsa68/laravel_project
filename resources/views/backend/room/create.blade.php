@@ -1,250 +1,170 @@
- 
- 
- 
- @extends("backend.layouts.app")
-@section("head")
+@extends("backend.layouts.app")
 
+@section("head")
 <head>
     <meta charset="utf-8" />
-    <title>Form Elements | Dashtrap - Responsive Bootstrap 5 Admin Dashboard</title>
+    <title>Add Room | Dashtrap - Responsive Bootstrap 5 Admin Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-    <meta content="Myra Studio" name="author" />
-
-    <!-- App favicon -->
     <link rel="shortcut icon" href="{{url('')}}/assets/images/favicon.ico">
-
-    <!-- App css -->
     <link href="{{url('')}}/assets/css/style.min.css" rel="stylesheet" type="text/css">
     <link href="{{url('')}}/assets/css/icons.min.css" rel="stylesheet" type="text/css">
     <script src="{{url('')}}/assets/js/config.js"></script>
-
-</head>
+    </head>
 @endsection
+
 @section("content")
-
 <div class="container-fluid">
-    <div class="container-fluid">
-
-        <!-- start page title -->
-        <div class="py-3 py-lg-4">
-            <div class="row">
-                 <div class="col-lg-8">
+    <div class="py-3 py-lg-4">
+        <div class="row">
+            <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                        <h4 class="header-title mb-4">Add New Room</h4>
+
                         @if(session('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ session('success') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
                         @endif
 
-                        @if($errors->any())
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <ul class="mb-0">
-                                @foreach($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                        @endif
-
-                        <form method="post" action="{{route('room.store')}}">
-                           
+                        <form method="post" action="{{route('room.store')}}" enctype="multipart/form-data">
                             @csrf
 
-                            <div class="mb-3">
-                                <label for="title" class="form-label">Name *</label>
-                                <input type="text"
-                                    name="name"
-                                    id="name"
-                                    class="form-control "
-                                    value="{{ old('name') }}"
-                                    placeholder="Enter amenity name"
-                                    required>
-                               
-                            </div>
-                            <div class="mb-3">
-                                <label for="title" class="form-label">Fare</label>
-                                <input type="text"
-                                    name="fare"
-                                    id="name"
-                                    class="form-control "
-                                    value="{{ old('name') }}"
-                                    placeholder="Enter amenity name"
-                                    required>
-                               
-                            </div>
-                            <div class="mb-3">
-                                <label for="title" class="form-label">Adult</label>
-                                <input type="text"
-                                    name="adults"
-                                    id="name"
-                                    class="form-control "
-                                    value="{{ old('name') }}"
-                                    placeholder="Enter amenity name"
-                                    required>
-                               
-                            </div>
-                            <div class="mb-3">
-                                <label for="title" class="form-label">Child</label>
-                                <input type="text"
-                                    name="children"
-                                    id="name"
-                                    class="form-control "
-                                    value="{{ old('name') }}"
-                                    placeholder="Enter amenity name"
-                                    required>
-                               
-                            </div>
-                            
-
-                            <div class="mb-3">
-                                <label for="status" class="form-label">Status *</label>
-                                <select class="form-select"
-                                    id="status"
-                                    name="status"
-                                    required>
-                                    <option value="">Select Status</option>
-                                    <option value="Enabled"
-                                        {{ old('status', 'Enabled') == 'Enabled' ? 'selected' : '' }}>
-                                        Enabled
-                                    </option>
-                                    <option value="Disabled"
-                                        {{ old('status') == 'Disabled' ? 'selected' : '' }}>
-                                        Disabled
-                                    </option>
-                                </select>
-                                
-                            </div>
-                            <div class="mb-3">
-                                <label for="status" class="form-label">Feature Status *</label>
-                                <select class="form-select"
-                                    id="status"
-                                    name="is_featured"
-                                    required>
-                                    <option value="">Select Feature</option>
-                                    <option value="Featured"
-                                        {{ old('feature_status', 'Featured') == 'Featured' ? 'selected' : '' }}>
-                                       Featured
-                                    </option>
-                                    <option value="Unfeatured"
-                                        {{ old('feature_status') == 'Unfeatured' ? 'selected' : '' }}>
-                                        Unfeatured
-                                    </option>
-                                </select>
-                                
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">Name *</label>
+                                    <input type="text" name="name" class="form-control" value="{{ old('name') }}" placeholder="Room Name" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Slug *</label>
+                                    <input type="text" name="slug" class="form-control" placeholder="room-slug" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Room / Suite *</label>
+                                    <select class="form-select" name="room_type" required>
+                                        <option value="">Select One</option>
+                                        <option value="Room">Room</option>
+                                        <option value="Suite">Suite</option>
+                                    </select>
+                                </div>
                             </div>
 
-                             <div class="mb-3">
-                                <label for="status" class="form-label">Room / Suite *</label>
-                                <select class="form-select"
-                                    id="room_type"
-                                    name="room_type"
-                                    required>
-                                    <option value="">Select Room / Suite</option>
-                                    <option value="Room"
-                                        {{ old('room_suite', 'Room') == 'Room' ? 'selected' : '' }}>
-                                      Room
-                                    </option>
-                                    <option value="Unfeatured"
-                                        {{ old('room_suite') == 'Suite ' ? 'selected' : '' }}>
-                                        Suite
-                                    </option>
-                                </select>
-                                
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">Fare / Night *</label>
+                                    <div class="input-group">
+                                        <input type="number" name="fare" class="form-control" required>
+                                        <span class="input-group-text">USD</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Offer Fare / Night</label>
+                                    <div class="input-group">
+                                        <input type="number" name="offer_fare" class="form-control">
+                                        <span class="input-group-text">USD</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Cancellation Fee / Night *</label>
+                                    <div class="input-group">
+                                        <input type="number" name="cancellation_fee" class="form-control">
+                                        <span class="input-group-text">USD</span>
+                                    </div>
+                                </div>
                             </div>
 
-                            
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">Total Adult *</label>
+                                    <input type="number" name="adults" class="form-control" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Total Child *</label>
+                                    <input type="number" name="children" class="form-control" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Size *</label>
+                                    <input type="text" name="size" class="form-control" placeholder="e.g. 250 sqft">
+                                </div>
+                            </div>
 
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Amenities</label>
+                                    <input type="text" name="amenities" class="form-control" placeholder="WiFi, AC, TV">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Facilities</label>
+                                    <input type="text" name="facilities" class="form-control">
+                                </div>
+                            </div>
 
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Keywords</label>
+                                    <input type="text" name="keywords" class="form-control" placeholder="Keywords separated by comma">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label d-block">Featured</label>
+                                    <div class="btn-group w-100" role="group">
+                                        <input type="radio" class="btn-check" name="is_featured" id="featured1" value="1">
+                                        <label class="btn btn-outline-danger" for="featured1">Featured</label>
+                                        <input type="radio" class="btn-check" name="is_featured" id="featured0" value="0" checked>
+                                        <label class="btn btn-outline-secondary" for="featured0">Unfeatured</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Main Image (1000x500)</label>
+                                    <div class="border d-flex align-items-center justify-content-center bg-light" style="height: 200px; border-style: dashed !important;">
+                                        <input type="file" name="main_image" class="form-control w-75">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Description</label>
+                                    <textarea name="description" class="form-control" rows="8"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <label class="form-label">Gallery Images</label>
+                                    <div class="border p-4 text-center bg-light" style="border-style: dashed !important;">
+                                        <i class="fas fa-cloud-upload-alt fa-3x mb-2"></i>
+                                        <p>Drag & Drop files here or click to browse</p>
+                                        <input type="file" name="gallery[]" multiple class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Cancellation Policy</label>
+                                <textarea name="cancellation_policy" class="form-control" rows="4"></textarea>
+                            </div>
+
+                            <div class="mt-4">
+                                <button type="submit" class="btn btn-primary shadow-sm">
+                                    <i class="fas fa-save me-1"></i> Save Room Information
+                                </button>
+                                <a href="{{ route('room.index') }}" class="btn btn-secondary shadow-sm">
+                                    <i class="fas fa-times me-1"></i> Cancel
+                                </a>
+                            </div>
+                        </form>
                     </div>
-                    <div class="mt-4">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save me-1"></i> Add Room
-                        </button>
-                        <a href="{{ route('amenitie.index') }}" class="btn btn-secondary">
-                            <i class="fas fa-list me-1"></i> Back to List
-                        </a>
-
-                    </div>
-                    </form>
                 </div>
             </div>
-            </div>
         </div>
-        <!-- end page title -->
-
-       
     </div>
 </div>
-
-<!-- JavaScript -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Quick icon selection
-    document.querySelectorAll('.icon-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const icon = this.getAttribute('data-icon');
-            document.getElementById('icon').value = icon;
-            
-            // Highlight selected button
-            document.querySelectorAll('.icon-btn').forEach(b => {
-                b.classList.remove('btn-primary');
-                b.classList.add('btn-outline-secondary');
-            });
-            this.classList.remove('btn-outline-secondary');
-            this.classList.add('btn-primary');
-        });
-    });
-    
-    // Form validation
-    const form = document.querySelector('form');
-    form.addEventListener('submit', function(e) {
-        const title = document.getElementById('title').value.trim();
-        const status = document.getElementById('status').value;
-        
-        if (!title) {
-            e.preventDefault();
-            alert('Please enter a title');
-            document.getElementById('title').focus();
-            return false;
-        }
-        
-        if (!status) {
-            e.preventDefault();
-            alert('Please select a status');
-            document.getElementById('status').focus();
-            return false;
-        }
-    });
-    
-    // Auto-select Enabled by default
-    const statusSelect = document.getElementById('status');
-    if (!statusSelect.value) {
-        statusSelect.value = 'Enabled';
-    }
-});
-</script>
-
-<style>
-.icon-btn:hover {
-    transform: translateY(-2px);
-    transition: all 0.2s;
-}
-.btn-outline-secondary.btn-primary {
-    background-color: #0d6efd;
-    border-color: #0d6efd;
-    color: white;
-}
-</style>
-
 @endsection
 
 @section("scripts")
 <script src="{{url('')}}/assets/js/vendor.min.js"></script>
 <script src="{{url('')}}/assets/js/app.js"></script>
 @endsection
- 
- 
