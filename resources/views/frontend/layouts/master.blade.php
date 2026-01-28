@@ -19,18 +19,14 @@
                                     <nav id="mobile-menu">
                                           <ul>
                                             <li class="has-sub">
-                                                <a href="{{url('')}}/assets/frontend/index.html">Home</a>
-                                                <ul>													
-													<li><a href="{{url('')}}/assets/frontend/index.html">Home Page 01</a></li>
-													<li><a href="{{url('')}}/assets/frontend/index-2.html">Home Page 02</a></li>	
-												</ul>
+                                                <a href="{{url('/pages/home')}}">Home</a>
+                                               
                                             </li>
-                                            <li><a href="{{url('')}}/assets/frontend/about.html">About</a></li>        
+                                            <li><a href="{{url('/about')}}">About</a></li>        
                                             <li class="has-sub">
-                                                <a href="{{url('')}}/assets/frontend/room.html">our rooms</a>
+                                                <a href="{{url('/room')}}">our rooms</a>
                                                 <ul>													
-													<li> <a href="{{url('')}}/assets/frontend/room.html">Our Rooms</a></li>
-                                                    <li> <a href="{{url('')}}/assets/frontend/single-rooms.html">Rooms Details</a></li>
+													<li> <a href="{{url('/room')}}">Our Rooms</a></li>
 												</ul>
                                             </li>     
                                             <li class="has-sub">

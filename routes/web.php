@@ -104,9 +104,12 @@ Route::post('/amenitie/status-toggle', [AmenitieController::class, 'statusToggle
 
 
 
+//frontend
+     Route::get('/about', function(){return view('frontend.about');});
+     Route::get('/room', function(){return view('frontend.room');});
+     Route::get('/pages/home', function(){return view('frontend.pages.home');});
 
-
-
+    //frontend
      Route::get('/admin/dashboard', [AdminController::class, 'Admindashboard'])->name('admin.dashboard');
      Route::get('/manager/dashboard', [ManagerController::class, 'ManagerDashboard'])->name('manager.dashboard');
 require __DIR__.'/auth.php';
