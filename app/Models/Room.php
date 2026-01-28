@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\Room_no;
+use App\Models\Room_no as ModelsRoom_no;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,5 +21,7 @@ class Room extends Model
     protected $casts = [
         'gallery_images' => 'array',
     ];
-        
+        public function roomNumbers() {
+    return $this->hasMany(RoomNo::class, 'room_id');
+}
 }

@@ -15,28 +15,28 @@ return new class extends Migration
            $table->id();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->string('room_type'); // Room or Suite
+            $table->string('room_type'); 
             
-            // Pricing
+            
             $table->decimal('fare', 10, 2);
             $table->decimal('offer_fare', 10, 2)->nullable();
             $table->decimal('cancellation_fee', 10, 2)->default(0);
             
-            // Capacity & Size
+            
             $table->integer('total_adult');
             $table->integer('total_child');
-            $table->string('size'); // e.g., 500 sqft
+            $table->string('size'); 
             
-            // Details
-            $table->text('amenities')->nullable(); // JSON or Comma separated
+            
+            $table->text('amenities')->nullable(); 
             $table->text('facilities')->nullable();
             $table->text('keywords')->nullable();
             $table->longText('description')->nullable();
             $table->longText('cancellation_policy')->nullable();
             
-            // Images & Status
+            
             $table->string('main_image')->nullable();
-            $table->text('gallery_images')->nullable(); // Multiple images path
+            $table->text('gallery_images')->nullable(); 
             $table->boolean('is_featured')->default(0);
             $table->enum('status', ['Enabled', 'Disabled'])->default('Enabled');
             

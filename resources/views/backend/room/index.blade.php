@@ -1,6 +1,7 @@
 @extends("backend.layouts.app")
 
 @section("head")
+
 <head>
     <meta charset="utf-8" />
     <title>All Rooms | Admin Panel</title>
@@ -12,8 +13,16 @@
     <link href="{{url('')}}/assets/css/icons.min.css" rel="stylesheet" type="text/css">
     <script src="{{url('')}}/assets/js/config.js"></script>
     <style>
-        .table thead th { background-color: #f8f9fa; text-transform: capitalize; font-weight: 600; }
-        .room-name { font-weight: 600; color: #333; }
+        .table thead th {
+            background-color: #f8f9fa;
+            text-transform: capitalize;
+            font-weight: 600;
+        }
+
+        .room-name {
+            font-weight: 600;
+            color: #333;
+        }
     </style>
 </head>
 @endsection
@@ -64,9 +73,9 @@
                                         <td>{{ $item->total_child ?? $item->children }}</td>
                                         <td>
                                             @if($item->is_featured == 'Featured')
-                                                <span class="badge bg-warning-subtle text-warning border border-warning-subtle">Featured</span>
+                                            <span class="badge bg-warning-subtle text-warning border border-warning-subtle">Featured</span>
                                             @else
-                                                <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle">Unfeatured</span>
+                                            <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle">Unfeatured</span>
                                             @endif
                                         </td>
                                         <td>{{ $item->room_type }}</td>
@@ -75,26 +84,35 @@
                                                 {{ $item->status }}
                                             </span>
                                         </td>
+                                        
                                         <td class="text-center">
                                             <div class="btn-group gap-1">
+
+                                             <a href="{{ route('room_no.index', $item->id) }}" class="btn btn-outline-primary" style="border-radius: 20px;">
+                                                + Rooms ({{ $item->roomNumbers->count() }})
+                                            </a>
                                                 <a href="{{ route('room.edit', $item->id) }}" class="btn btn-sm btn-soft-primary" title="Edit">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                
-                                                <button type="button" class="btn btn-sm toggle-status {{ $item->status == 'Enabled' ? 'btn-soft-warning' : 'btn-soft-success' }}" 
+
+                                                <button type="button" class="btn btn-sm toggle-status {{ $item->status == 'Enabled' ? 'btn-soft-warning' : 'btn-soft-success' }}"
                                                     data-id="{{ $item->id }}" title="Toggle Status">
                                                     <i class="fas {{ $item->status == 'Enabled' ? 'fa-eye-slash' : 'fa-eye' }}"></i>
                                                 </button>
-
+                                                    
+                                           
+                                        
                                                 <form action="{{ route('room.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Delete this room?')" style="display:inline-block;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-soft-danger" title="Delete">
+                                                    <button type="submit" class="btn btn- btn-soft-danger" title="Delete">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                 </form>
                                             </div>
                                         </td>
+                                        
+
                                     </tr>
                                     @empty
                                     <tr>
@@ -131,11 +149,11 @@
             success: function(response) {
                 if (response.status === 'Enabled') {
                     button.removeClass('btn-soft-success').addClass('btn-soft-warning')
-                          .html('<i class="fas fa-eye-slash"></i>');
+                        .html('<i class="fas fa-eye-slash"></i>');
                     row.find('.status-badge').removeClass('bg-danger').addClass('bg-success').text('Enabled');
                 } else {
                     button.removeClass('btn-soft-warning').addClass('btn-soft-success')
-                          .html('<i class="fas fa-eye"></i>');
+                        .html('<i class="fas fa-eye"></i>');
                     row.find('.status-badge').removeClass('bg-success').addClass('bg-danger').text('Disabled');
                 }
             }

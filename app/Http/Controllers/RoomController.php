@@ -22,7 +22,7 @@ class RoomController extends Controller
 
     public function store(Request $request)
     {
-        // ১. ডাটা ভ্যালিডেশন
+        
         $request->validate([
             'name' => 'required|string|max:255',
             'room_type' => 'required',
@@ -34,14 +34,11 @@ class RoomController extends Controller
 
         $data = $request->all();
 
-        // ২. স্লাগ জেনারেশন
+        
         $data['slug'] = $request->slug ? Str::slug($request->slug) : Str::slug($request->name);
 
-        // ৩. কলাম ম্যাপিং (আপনার ডাটাবেস কলামের নামের সাথে মিল করা)
-        $data['total_adult'] = $request->adults;
-        $data['total_child'] = $request->children;
+       
 
-        // ৪. মেইন ইমেজ আপলোড
         if ($request->hasFile('main_image')) {
             $path = public_path('uploads/rooms');
             if (!File::isDirectory($path)) {
@@ -53,7 +50,6 @@ class RoomController extends Controller
             $data['main_image'] = 'uploads/rooms/' . $imageName;
         }
 
-        // ৫. গ্যালারি ইমেজ আপলোড
         if ($request->hasFile('gallery')) {
             $galleryPath = public_path('uploads/rooms/gallery');
             if (!File::isDirectory($galleryPath)) {
@@ -69,7 +65,6 @@ class RoomController extends Controller
             $data['gallery_images'] = json_encode($galleryPaths);
         }
 
-        // ৬. ডাটাবেসে সেভ
         Room::create($data);
 
         return redirect()->route('room.index')->with('success', 'Room added successfully!');
@@ -94,9 +89,7 @@ class RoomController extends Controller
         $data = $request->all();
         $data['slug'] = $request->slug ? Str::slug($request->slug) : Str::slug($request->name);
         
-        // আপডেট এর সময়ও ম্যাপিং জরুরি
-        $data['total_adult'] = $request->adults;
-        $data['total_child'] = $request->children;
+       
 
         if ($request->hasFile('main_image')) {
             if ($room->main_image && file_exists(public_path($room->main_image))) {

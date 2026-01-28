@@ -77,11 +77,11 @@
                             <div class="row mb-3">
                                 <div class="col-md-4">
                                     <label class="form-label">Total Adult *</label>
-                                    <input type="number" name="adults" class="form-control" required>
+                                    <input type="number" name="total_adult" class="form-control" required>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Total Child *</label>
-                                    <input type="number" name="children" class="form-control" required>
+                                    <input type="number" name="total_child" class="form-control" required>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Size *</label>
