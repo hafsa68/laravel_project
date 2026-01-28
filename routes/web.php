@@ -104,11 +104,12 @@ Route::post('/amenitie/status-toggle', [AmenitieController::class, 'statusToggle
     ->name('room.status.toggle');
 
 
-Route::delete('/room-no/delete/{id}', [RoomNoController::class, 'destroy'])->name('room_no.destroy');
-Route::put('/room-no/update/{id}', [RoomNoController::class, 'update'])->name('room_no.update');
 
-Route::post('/room-no/store', [RoomNoController::class, 'store'])->name('room_no.store');
-Route::get('/room-details/{room_id}', [RoomNoController::class, 'index'])->name('room_no.index');
+
+
+
+
+
      Route::get('/admin/dashboard', [AdminController::class, 'Admindashboard'])->name('admin.dashboard');
      Route::get('/manager/dashboard', [ManagerController::class, 'ManagerDashboard'])->name('manager.dashboard');
 require __DIR__.'/auth.php';
