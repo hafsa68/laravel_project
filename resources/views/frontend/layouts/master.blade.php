@@ -26,7 +26,7 @@
                                             <li class="has-sub">
                                                 <a href="{{url('/room')}}">our rooms</a>
                                                 <ul>													
-													<li> <a href="{{url('/room')}}">Our Rooms</a></li>
+													<li> <a href="{{url('')}}">Our Rooms</a></li>
 												</ul>
                                             </li>     
                                             <li class="has-sub">

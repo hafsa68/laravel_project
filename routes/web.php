@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AmenitieController;
 use App\Http\Controllers\BedController;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FacilitieController;
@@ -104,12 +105,29 @@ Route::post('/amenitie/status-toggle', [AmenitieController::class, 'statusToggle
     ->name('room.status.toggle');
 
 
+Route::delete('/room-no/delete/{id}', [RoomNoController::class, 'destroy'])->name('room_no.destroy');
+Route::put('/room-no/update/{id}', [RoomNoController::class, 'update'])->name('room_no.update');
+
+
+Route::post('/room-no/store', [RoomNoController::class, 'store'])->name('room_no.store');
+Route::get('/room-details/{room_id}', [RoomNoController::class, 'index'])->name('room_no.index');
 
 
 
+//frontend
+     Route::get('/about', function(){return view('frontend.about');});
+    
+     Route::get('/pages/home', function(){return view('frontend.pages.home');});
+
+    //frontend
 
 
+Route::get('/book', [BookController::class, 'index'])->name('book.index');
+Route::get('/book/search', [BookController::class, 'search'])->name('book.search');
+Route::post('/book/store', [BookController::class, 'store'])->name('booking.store');
 
-     Route::get('/admin/dashboard', [AdminController::class, 'Admindashboard'])->name('admin.dashboard');
+
+Route::get('/admin/get-room-count/{id}', [App\Http\Controllers\BookController::class, 'getRoomCount']);
+Route::get('/admin/dashboard', [AdminController::class, 'Admindashboard'])->name('admin.dashboard');
      Route::get('/manager/dashboard', [ManagerController::class, 'ManagerDashboard'])->name('manager.dashboard');
 require __DIR__.'/auth.php';

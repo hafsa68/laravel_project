@@ -86,7 +86,7 @@
                  </a>
              </li>
              <li class="menu-item">
-                 <a href="/room" class="menu-link waves-effect waves-light">
+                 <a href="/book" class="menu-link waves-effect waves-light">
                      <span class="menu-icon"><i class="bx bx-cookie"></i></span>
 
                      <span class="menu-text">Book Room</span>
